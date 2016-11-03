@@ -33,7 +33,6 @@
 /dev/kgsl-3d0             0666   system     system
 /dev/kgsl-2d0             0666   root       root
 /dev/kgsl-2d1             0666   root       root
-/dev/sensors              0666   root       root
 /dev/ion                  0664   system     system
 /dev/rtc0                 0660   system     system
 /dev/smd0                 0660   system     system
@@ -43,8 +42,8 @@
 /dev/smd6                 0660   system     system
 /dev/smd7                 0660   bluetooth  bluetooth
 /dev/ccid_bridge          0660   system     system
-/dev/ipa                  0660   system  net_admin
-/dev/wwan_ioctl           0660   system  net_admin
+/dev/ipa                  0660   system     net_admin
+/dev/wwan_ioctl           0660   system     net_admin
 /dev/ipaNatTable          0660   net_admin  net_admin
 /dev/rmnet_ctrl           0660   usb        usb
 /dev/dpl_ctrl             0660   usb        usb
@@ -117,6 +116,13 @@
 /dev/jpeg3                0660   system     camera
 /dev/adsprpc-smd          0664   system     system
 /dev/system_health_monitor 0640  radio      system
+/dev/fpc1020              0666   system     system
+
+# wlan
+/dev/wcnss_wlan           0660   system     system
+/dev/wcnss_ctrl           0660   system     system
+/sys/devices/soc.0/a000000.qcom,wcnss-wlan/net/wlan0/queues/rx-* rps_cpus           0660   system     system
+/sys/devices/soc.0/a000000.qcom,wcnss-wlan/net/p2p0/queues/rx-* rps_cpus            0660   system     system
 /dev/msm_camera/*         0660   system     camera
 /dev/gemini/              0660   system     camera
 /dev/mercury0             0660   system     camera
@@ -211,10 +217,9 @@
 /sys/devices/soc.0/78b5000.i2c/i2c-1/1-0045/leds/green		blink	0660	input	system
 /sys/devices/soc.0/78b5000.i2c/i2c-1/1-0045/leds/blue		blink	0660	input	system
 
-# fpc Fingerprint
-/sys/devices/soc.0/fpc_fpc1020*             hw_reset       0220   system     system
-/sys/devices/soc.0/fpc_fpc1020*             irq            0660   system     system
-/sys/devices/soc.0/fpc_fpc1020*             wakeup_enable  0220   system     system
+# vm_bms
+/dev/vm_bms               0660   system     system
+/dev/battery_data         0660   system     system
 
 # wlan
 /dev/wcnss_wlan           0660   system     system
@@ -247,7 +252,11 @@
 /dev/ontario              0640   system     system
 
 # Add device block for FRP
-/dev/block/bootdevice/by-name/config    0660   system     system
+/dev/block/platform/soc.0/7824900.sdhci/by-name/config    0660   system     system
 
 # For lirc
 /dev/lirc0          0660   system     system
+
+# FPC
+/sys/devices/soc.0/fpc_fpc1020.*        irq             0660        system      system
+/sys/devices/soc.0/fpc_fpc1020.*        enable_wakeup   0660        system      system

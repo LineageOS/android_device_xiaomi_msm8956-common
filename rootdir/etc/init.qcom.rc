@@ -154,7 +154,10 @@ on boot
     chown radio radio /data/misc/radio/copy_complete
     chmod 0660 /data/misc/radio/copy_complete
 
-    # Notification LED
+    # LED
+    chmod 0666 /sys/class/leds/led:torch_0/brightness
+    chmod 0666 /sys/class/leds/led:torch_1/brightness
+    chmod 0666 /sys/class/leds/led:switch/brightness
     chown system system /sys/class/leds/red/blink
     chown system system /sys/class/leds/green/blink
     chown system system /sys/class/leds/blue/blink
@@ -284,7 +287,8 @@ on post-fs-data
     chmod 0770 /data/misc/fm
 
     # Fingerprint
-    mkdir /data/fpc 0700 system system
+    mkdir /data/fpc 0770 system system
+    mkdir /data/fpc/s 0770 system system
 
     mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
@@ -465,7 +469,7 @@ service ril-daemon2 /system/bin/rild -c 2
     socket rild2 stream 660 root radio
     socket rild-debug2 stream 660 radio system
     user root
-    group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log
+    group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log net_raw
 
 service charger /charger
     class charger
@@ -564,6 +568,7 @@ service msm_irqbal_lb /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqba
 
 service fingerprintd /system/bin/fingerprintd
     class late_start
-    socket fpce stream 0666 system system
     user system
+    group drmrpc input system
+    socket fpce stream 0660 system system
     writepid /dev/cpuset/system-background/tasks
