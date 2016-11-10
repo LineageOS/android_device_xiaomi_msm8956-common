@@ -57,6 +57,8 @@ media.msm8956hw=1
 mm.enable.smoothstreaming=true
 mmp.enable.3g2=true
 media.aac_51_output_enabled=true
+media.stagefright.legacyencoder=true
+media.stagefright.less-secure=true
 
 # Netmgrd
 ro.use_data_netmgrd=true
