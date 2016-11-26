@@ -26,9 +26,6 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-export PATH=/system/bin
-
-# Set platform variables
 target=`getprop ro.board.platform`
 if [ -f /sys/devices/soc0/soc_id ]; then
     platformid=`cat /sys/devices/soc0/soc_id`
@@ -79,7 +76,6 @@ baseband=`getprop ro.baseband`
 echo 1 > /proc/sys/net/ipv6/conf/default/accept_ra_defrtr
 
 start_sensors
-start_copying_prebuilt_qcril_db
 start_msm_irqbalance_8952
 
 if [ -f /sys/class/graphics/fb0/modes ]; then
@@ -91,24 +87,29 @@ if [ -f /sys/class/graphics/fb0/modes ]; then
 	fi
 fi
 
-bootmode=`getprop ro.bootmode`
-emmc_boot=`getprop ro.boot.emmc`
-case "$emmc_boot"
-    in "true")
-        if [ "$bootmode" != "charger" ]; then # start rmt_storage and rfs_access
-            start rmt_storage
-            start rfs_access
-        fi
-    ;;
-esac
+#
+# Copy qcril.db if needed for RIL
+#
+start_copying_prebuilt_qcril_db
+echo 1 > /data/misc/radio/db_check_done
 
 #
-# Make modem config folder and copy firmware config to that folder
+# Make modem config folder and copy firmware config to that folder for RIL
 #
-rm -rf /data/misc/radio/modem_config
-mkdir /data/misc/radio/modem_config
-chmod 770 /data/misc/radio/modem_config
-cp -r /firmware/image/modem_pr/mcfg/configs/* /data/misc/radio/modem_config 
-chown -hR radio.radio /data/misc/radio/modem_config
+if [ -f /data/misc/radio/ver_info.txt ]; then
+    prev_version_info=`cat /data/misc/radio/ver_info.txt`
+else
+    prev_version_info=""
+fi
+
+cur_version_info=`cat /firmware/verinfo/ver_info.txt`
+if [ ! -f /firmware/verinfo/ver_info.txt -o "$prev_version_info" != "$cur_version_info" ]; then
+    rm -rf /data/misc/radio/modem_config
+    mkdir /data/misc/radio/modem_config
+    chmod 770 /data/misc/radio/modem_config
+    cp -r /firmware/image/modem_pr/mcfg/configs/* /data/misc/radio/modem_config
+    chown -hR radio.radio /data/misc/radio/modem_config
+    cp /firmware/verinfo/ver_info.txt /data/misc/radio/ver_info.txt
+    chown radio.radio /data/misc/radio/ver_info.txt
+fi
 echo 1 > /data/misc/radio/copy_complete
-chown radio:radio /data/misc/radio/copy_complete
