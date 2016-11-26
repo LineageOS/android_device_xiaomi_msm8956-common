@@ -76,9 +76,11 @@ PRODUCT_PACKAGES += \
     audio.r_submix.default \
     audio.usb.default \
     libaudio-resampler \
+    libaudioroute \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
+    libtinycompress \
     tinymix
 
 PRODUCT_COPY_FILES += \
@@ -144,6 +146,10 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_PACKAGES += \
+    gps.msm8952 \
+    libcurl
+
+PRODUCT_PACKAGES += \
     flp.conf \
     gps.conf \
     izat.conf \
@@ -151,22 +157,24 @@ PRODUCT_PACKAGES += \
     sap.conf \
     xtwifi.conf
 
+# IPA Manager
 PRODUCT_PACKAGES += \
-    gps.msm8952 \
-    libcurl
+    ipacm \
+    IPACM_cfg.xml
 
-# IPACM
+# IPC router config
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config
+
+# IPv6
 PRODUCT_PACKAGES += \
-    IPACM_cfg.xml \
-    ipacm
+    ebtables \
+    ethertypes \
+    libebtc
 
 # IRQ
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/msm_irqbalance_little_big.conf:system/vendor/etc/msm_irqbalance_little_big.conf
-
-# IRSC
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/sec_config:system/etc/sec_config
 
 # Keymaster
 PRODUCT_PACKAGES += \
@@ -190,6 +198,7 @@ PRODUCT_COPY_FILES += \
 # OMX
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
+    libextmedia_jni \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxCore \
