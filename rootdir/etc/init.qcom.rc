@@ -37,17 +37,30 @@ on early-init
     mkdir /system 0777 root root
     symlink /data/tombstones /tombstones
     mkdir /dsp 0771 media media
+    mount debugfs debugfs /sys/kernel/debug
+    chmod 0755 /sys/kernel/debug
 
 on init
-    mount debugfs /sys/kernel/debug /sys/kernel/debug mode=755
-
     # Set permissions for persist partition
     mkdir /persist 0771 system system
+
+    # Support legacy paths
+    symlink /sdcard /storage/sdcard0
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
 
+    # set aggressive read ahead during boot up.
+    write /sys/block/dm-0/queue/read_ahead_kb 2048
+
+    # Allow subsystem (modem etc) debugging
+    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.sys.ssr.enable_debug}
+    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.sys.mba_boot_timeout}
+    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.sys.modem_auth_timeout}
+    write /sys/module/pil_msa/parameters/modem_dbg_cfg ${persist.sys.modem_dbg_cfg}
+    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.sys.pil_proxy_timeout}
+    write /sys/kernel/codec_type/boot ${persist.sys.external}
     write /sys/kernel/boot_adsp/boot 1
     chown root audio /sys/kernel/boot_adsp/boot
 
@@ -57,14 +70,22 @@ on early-boot
     write /sys/bus/msm_subsys/devices/subsys2/restart_level "related"
     write /sys/bus/msm_subsys/devices/subsys3/restart_level "related"
 
+on fs
+    wait /dev/block/bootdevice
+    mount_all fstab.qcom
+    write /proc/sys/vm/swappiness 100
+    mkdir /persist/data 0700 system system
+    restorecon_recursive /persist
+
 on boot
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
-    chown bluetooth net_bt /sys/class/rfkill/rfkill0/type
-    chown bluetooth net_bt /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /proc/bluetooth/sleep/proto
     chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_lpm
     chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_btwrite
     chown system system /sys/module/sco/parameters/disable_esco
+    chown system system /sys/class/leds/red/blink
     chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
     chown system system /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/module/bluetooth_power/parameters/power
@@ -72,7 +93,7 @@ on boot
     chmod 0660 /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /proc/bluetooth/sleep/proto
-    chown net_bt bluetooth /dev/ttyHS0
+    chown bluetooth bluetooth /dev/ttyHS0
     chmod 0660 /sys/module/hci_uart/parameters/ath_lpm
     chmod 0660 /sys/module/hci_uart/parameters/ath_btwrite
     chmod 0660 /dev/ttyHS0
@@ -82,7 +103,7 @@ on boot
     chmod 0660 /dev/ttyHS2
     chown bluetooth bluetooth /dev/ttyHS2
 
-    chown net_bt bluetooth /sys/class/rfkill/rfkill0/device/extldo
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
 
     #Create QMUX deamon socket area
@@ -96,8 +117,10 @@ on boot
     chmod 2770 /dev/socket/qmux_gps
 
     mkdir /persist/drm 0770 system system
-
     mkdir /persist/bluetooth 0770 bluetooth bluetooth
+    mkdir /persist/alarm 0770 system system
+    mkdir /persist/misc 0770 system system
+    mkdir /persist/time 0770 system system
 
     #Create NETMGR daemon socket area
     mkdir /dev/socket/netmgr 0750 radio radio
@@ -149,11 +172,6 @@ on boot
     # Allow access for CCID command/response timeout configuration
     chown system system /sys/module/ccid_bridge/parameters/bulk_msg_timeout
 
-    # Mark the copy complete flag to not completed
-    write /data/misc/radio/copy_complete 0
-    chown radio radio /data/misc/radio/copy_complete
-    chmod 0660 /data/misc/radio/copy_complete
-
     # LED
     chmod 0666 /sys/class/leds/led:torch_0/brightness
     chmod 0666 /sys/class/leds/led:torch_1/brightness
@@ -164,14 +182,6 @@ on boot
     chown system system /sys/class/leds/red/led_time
     chown system system /sys/class/leds/green/led_time
     chown system system /sys/class/leds/blue/led_time
-
-on fs
-    mount_all fstab.qcom
-    mkdir /persist/data 0700 system system
-    restorecon_recursive /persist
-
-on post-fs
-    symlink /sdcard /storage/sdcard0
 
 # msm specific files that need to be created on /data
 on post-fs-data
@@ -260,12 +270,13 @@ on post-fs-data
 
     setprop vold.post_fs_data_done 1
 
+    #Create a folder for SRS to be able to create a usercfg file
+    mkdir /data/data/media 0770 media media
+
     #Create folder for mm-qcamera-daemon
     mkdir /data/camera 0770 media camera
 
     #Create PERFD deamon related dirs
-    mkdir /data/misc/perfd 0755 root system
-    chmod 2755 /data/misc/perfd
     mkdir /data/system/perfd 0770 root system
     chmod 2770 /data/system/perfd
 
@@ -273,6 +284,14 @@ on post-fs-data
     mkdir /persist/sensors 0775 system system
     chmod 664 /persist/sensors/sensors_settings
     chown system root /persist/sensors/sensors_settings
+
+    # qti-logkit data
+    mkdir /data/misc/qti-logkit/ 0771 system system
+    mkdir /data/misc/qti-logkit/shared-privileged/ 2770 system system
+    mkdir /data/misc/qti-logkit/shared-public/ 2770 system qcom_diag
+    mkdir /data/misc/qti-logkit/socket-privileged/ 2770 system system
+    mkdir /data/misc/qti-logkit/socket-public/ 2750 system qcom_diag
+    mkdir /data/misc/qti-logkit/logdata/ 2750 system shell
 
     # RIDL data
     mkdir /data/misc/SelfHost/ 0710 system shell
@@ -282,9 +301,22 @@ on post-fs-data
     mkdir /data/misc/SelfHost/Running/ 2750 system shell
     mkdir /data/misc/SelfHost/socket/ 2770 system system
 
-    # Create FM dir for patchdownloader
+    #Create FM dir for patchdownloader
     mkdir /data/misc/fm 0770 system system
     chmod 0770 /data/misc/fm
+
+    # Mark the copy complete flag to not completed
+    write /data/misc/radio/copy_complete 0
+    chown radio radio /data/misc/radio/copy_complete
+    chmod 0660 /data/misc/radio/copy_complete
+
+    # File flags for prebuilt ril db file
+    write /data/misc/radio/prebuilt_db_support 1
+    chown radio radio /data/misc/radio/prebuilt_db_support
+    chmod 0400 /data/misc/radio/prebuilt_db_support
+    write /data/misc/radio/db_check_done 0
+    chown radio radio /data/misc/radio/db_check_done
+    chmod 0660 /data/misc/radio/db_check_done
 
     # Fingerprint
     mkdir /data/fpc 0770 system system
@@ -298,6 +330,7 @@ on post-fs-data
     mkdir /persist/data/sfs 0700 system system
     mkdir /persist/data/tz 0700 system system
     mkdir /data/misc/dts 0770 media audio
+    mkdir /data/misc/audio_pp 0771 media audio
 
 on property:sys.boot_completed=1
     write /dev/kmsg "Boot completed "
@@ -311,13 +344,17 @@ on property:vold.decrypt=trigger_restart_framework
     start wcnss-service
     start config_bt_addr
 
+on property:persist.env.fastdorm.enabled=true
+    setprop persist.radio.data_no_toggle 1
+
 service cnd /system/bin/cnd
     class late_start
     socket cnd stream 660 root inet
     writepid /dev/cpuset/system-background/task
 
 service dpmd /system/bin/dpmd
-    class main
+    class late_start
+    socket dpmd stream 660 root system
     socket dpmd stream 660 root system
 
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
@@ -346,11 +383,6 @@ service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
     user root
     oneshot
 
-service qcom-sh /system/bin/sh /init.qcom.sh
-    class late_start
-    user root
-    oneshot
-
 service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
     class late_start
     user bluetooth
@@ -364,6 +396,11 @@ on property:bluetooth.hciattach=true
 on property:bluetooth.hciattach=false
     setprop bluetooth.status off
 
+service qcom-sh /system/bin/sh /init.qcom.sh
+    class late_start
+    user root
+    oneshot
+
 # FM
 on property:hw.fm.init=0
     write /sys/module/radio_iris_transport/parameters/fmsmd_set 0
@@ -375,7 +412,7 @@ on property:hw.fm.init=1
 service qmuxd /system/bin/qmuxd
     class main
     user root
-    group radio audio bluetooth gps qcom_diag
+    group radio audio bluetooth gps nfc qcom_diag
     writepid /dev/cpuset/system-background/tasks
 
 service netmgrd /system/bin/netmgrd
@@ -415,6 +452,9 @@ on property:ro.use_data_netmgrd=false
 # but only if ro.data.large_tcp_window_size property is set.
 on property:ro.data.large_tcp_window_size=true
     write /proc/sys/net/ipv4/tcp_adv_win_scale  2
+
+on property:sys.sysctl.tcp_adv_win_scale=*
+    write /proc/sys/net/ipv4/tcp_adv_win_scale ${sys.sysctl.tcp_adv_win_scale}
 
 service p2p_supplicant /system/bin/wpa_supplicant \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
@@ -469,17 +509,22 @@ service ril-daemon2 /system/bin/rild -c 2
     socket rild2 stream 660 root radio
     socket rild-debug2 stream 660 radio system
     user root
-    group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log net_raw
+    group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log net_raw wakelock
 
 service charger /charger
     class charger
     group system graphics
     seclabel u:r:healthd:s0
 
-service hvdcp_opti /system/bin/hvdcp_opti
-    class main
+service msm_irqbal_lb /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance_little_big.conf
+    class core
     user root
     group root
+    disabled
+    writepid /dev/cpuset/system-background/tasks
+
+on property:vold.decrypt=trigger_restart_min_framework
+    start time_daemon
 
 #start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
@@ -526,11 +571,6 @@ service wcnss-service /system/bin/wcnss_service
     group system wifi radio
     oneshot
 
-service adsprpcd /system/bin/adsprpcd
-    class main
-    user media
-    group media
-
 service ppd /system/vendor/bin/mm-pp-daemon
     class late_start
     disabled
@@ -544,8 +584,30 @@ on property:init.svc.surfaceflinger=stopped
 on property:init.svc.surfaceflinger=running
     start ppd
 
+on property:init.svc.surfaceflinger=restarting
+    stop ppd
+
+on property:init.svc.zygote=stopped
+    stop ppd
+
+on property:init.svc.zygote=running
+    start ppd
+
+on property:init.svc.zygote=restarting
+    stop ppd
+
 on charger
     start hvdcp_opti
+
+service adsprpcd /system/bin/adsprpcd
+    class main
+    user media
+    group media
+
+service hvdcp_opti /system/bin/hvdcp_opti
+    class main
+    user root
+    group root
 
 service qseeproxydaemon /system/vendor/bin/qseeproxydaemon
     class late_start
@@ -559,12 +621,18 @@ service per_mgr /system/bin/pm-service
     group system net_raw
     writepid /dev/cpuset/system-background/tasks
 
-service msm_irqbal_lb /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance_little_big.conf
+service per_proxy /system/bin/pm-proxy
     class core
-    user root
-    group root
+    user system
+    group system
     disabled
     writepid /dev/cpuset/system-background/tasks
+
+on property:init.svc.per_mgr=running
+    start per_proxy
+
+on property:sys.shutdown.requested=*
+    stop per_proxy
 
 service fingerprintd /system/bin/fingerprintd
     class late_start
