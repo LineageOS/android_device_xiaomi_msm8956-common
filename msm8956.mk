@@ -176,10 +176,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/msm_irqbalance_little_big.conf:system/vendor/etc/msm_irqbalance_little_big.conf
 
-# Keymaster
-PRODUCT_PACKAGES += \
-    keystore.msm8952
-
 # Lights
 PRODUCT_PACKAGES += \
     lights.msm8952
