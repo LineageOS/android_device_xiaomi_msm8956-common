@@ -1,2 +1,8 @@
+allow qti_init_shell bluetooth_data_file:file r_file_perms;
+allow qti_init_shell bluetooth_loader_exec:file { read open };
 allow qti_init_shell ctl_default_prop:property_service set;
+allow qti_init_shell hci_attach_dev:chr_file rw_file_perms;
 allow qti_init_shell proc_touchpanel:dir { rw_dir_perms setattr };
+allow qti_init_shell qmuxd:unix_stream_socket connectto;
+allow qti_init_shell qmuxd_socket:dir w_dir_perms;
+allow qti_init_shell qmuxd_socket:sock_file create_file_perms;
