@@ -248,9 +248,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/wifi/WCNSS_wlan_dictionary.dat:system/etc/firmware/wlan/prima/WCNSS_wlan_dictionary.dat
 
-PRODUCT_PACKAGES += \
-    wcnss_service
-
 # Wifi
 PRODUCT_PACKAGES += \
     libqsap_sdk \
