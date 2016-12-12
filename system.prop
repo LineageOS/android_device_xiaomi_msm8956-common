@@ -28,7 +28,7 @@ bluetooth.hfp.client=1
 qcom.bluetooth.soc=smd
 
 # Camera
-media.camera.ts.monotonic=1
+media.camera.ts.monotonic=0
 persist.camera.HAL3.enabled=1
 
 # CNE/DPM
