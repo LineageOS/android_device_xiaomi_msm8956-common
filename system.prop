@@ -1,4 +1,6 @@
 # Audio
+af.fast_track_multiplier=1
+audio_hal.period_size=192
 audio.dolby.ds2.enabled=true
 audio.deep_buffer.media=true
 audio.offload.buffer.size.kb=64
