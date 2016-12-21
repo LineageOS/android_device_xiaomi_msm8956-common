@@ -323,9 +323,6 @@
     <integer name="config_screenBrightnessDoze">17</integer>
     <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
 
-    <!-- enable doze powersaving mode -->
-    <bool name="config_enableAutoPowerModes">true</bool>
-
     <!-- Operating volatage for bluetooth controller. 0 by default-->
     <integer translatable="false" name="config_bluetooth_operating_voltage_mv">3300</integer>
 
