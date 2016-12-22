@@ -1,8 +1,8 @@
 # Audio
 af.fast_track_multiplier=1
 audio_hal.period_size=192
-audio.dolby.ds2.enabled=true
 audio.deep_buffer.media=true
+audio.dolby.ds2.enabled=true
 audio.offload.buffer.size.kb=64
 audio.offload.gapless.enabled=true
 audio.offload.min.duration.secs=30
@@ -26,20 +26,28 @@ voice.record.conc.disabled=false
 # Bluetooth
 bluetooth.hfp.client=1
 qcom.bluetooth.soc=smd
-
-# Camera
-media.camera.ts.monotonic=0
-persist.camera.HAL3.enabled=1
+ro.btconfig.if=smd
+ro.btconfig.dev=/dev/smd3
+ro.btconfig.vendor=qcom
+ro.btconfig.chip=WCN3680
 
 # CNE/DPM
 persist.cne.feature=1
-persist.dpm.feature=1
+persist.dpm.feature=5
 persist.dpm.nsrm.bkg.evt=3955
 
 # Dex2oat threads for faster app installation
 ro.sys.fw.dex2oat_thread_count=4
 
-# Display
+# FRP
+ro.frp.pst=/dev/block/bootdevice/by-name/config
+
+# GPS
+persist.gps.qc_nlp_in_use=1
+persist.loc.nlp_name=com.qualcomm.location
+ro.gps.agps_provider=1
+
+# Graphics
 debug.egl.hw=0
 debug.enable.sglscale=1
 debug.mdpcomp.logs=0
@@ -51,14 +59,6 @@ persist.hwc.downscale_threshold=1.15
 ro.opengles.version=196609
 ro.sf.lcd_density=480
 
-# FRP
-ro.frp.pst=/dev/block/bootdevice/by-name/config
-
-# GPS
-persist.gps.qc_nlp_in_use=1
-persist.loc.nlp_name=com.qualcomm.location
-ro.gps.agps_provider=1
-
 # Media
 media.msm8956hw=1
 mm.enable.smoothstreaming=true
@@ -66,9 +66,9 @@ mmp.enable.3g2=true
 media.aac_51_output_enabled=true
 
 # Netmgrd
-ro.use_data_netmgrd=true
-persist.data.netmgrd.qos.enable=true
 persist.data.mode=concurrent
+persist.data.netmgrd.qos.enable=true
+ro.use_data_netmgrd=true
 
 # NITZ
 persist.rild.nitz_plmn=
@@ -91,7 +91,7 @@ rild.libargs=-d /dev/smd0
 rild.libpath=/vendor/lib64/libril-qc-qmi-1.so
 ro.telephony.call_ring.multiple=false
 ro.telephony.default_cdma_sub=0
-ro.telephony.default_network=22,22
+ro.telephony.default_network=22,20
 telephony.lteOnCdmaDevice=1
 persist.radio.apm_sim_not_pwdn=1
 persist.radio.custom_ecc=1
