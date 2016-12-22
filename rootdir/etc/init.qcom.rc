@@ -348,14 +348,14 @@ on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
 service cnd /system/bin/cnd
-    class late_start
+    class main
     socket cnd stream 660 root inet
     writepid /dev/cpuset/system-background/task
 
 service dpmd /system/bin/dpmd
     class late_start
     socket dpmd stream 660 root system
-    socket dpmd stream 660 root system
+    group system readproc
 
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
     class main
@@ -371,6 +371,19 @@ service tftp_server /system/bin/tftp_server
     class main
     user root
     writepid /dev/cpuset/system-background/tasks
+
+on property:wc_transport.start_hci=true
+    start start_hci_filter
+
+on property:wc_transport.start_hci=false
+    stop start_hci_filter
+
+service start_hci_filter /system/bin/wcnss_filter
+    class late_start
+    user root
+    group bluetooth qcom_diag
+    disabled
+    writepid /dev/cpuset/system-background/task
 
 service config_bt_addr /system/bin/btnvtool -O
     class core
@@ -486,6 +499,11 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
+service loc_launcher /system/bin/loc_launcher
+    #loc_launcher will start as root and set its uid to gps
+    class late_start
+    group gps inet net_raw qcom_diag net_admin wifi
+
 on property:crypto.driver.load=1
     insmod /system/lib/modules/qce.ko
     insmod /system/lib/modules/qcedev.ko
@@ -497,8 +515,16 @@ service hostapd /system/bin/hostapd -dd /data/hostapd/hostapd.conf
     oneshot
     disabled
 
+service cnss_diag /system/bin/cnss_diag --q -f -d
+    class late_start
+    user system
+    group system wifi inet net_admin sdcard_rw media_rw diag
+    oneshot
+
 service cnss-daemon /system/bin/cnss-daemon -n -l
     class late_start
+    user system
+    group system inet net_admin wifi
 
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
