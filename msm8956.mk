@@ -200,10 +200,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     power.msm8952
 
-# Protobuf
-PRODUCT_PACKAGES += \
-    libprotobuf-cpp-full
-
 # Qualcomm dependencies
 PRODUCT_PACKAGES += \
     libtinyxml \
