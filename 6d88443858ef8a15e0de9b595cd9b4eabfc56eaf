@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_5b6de603",
+        "filename": "rootdir/etc/init.qcom.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 13452
+      },
+      "writtenOn": "2017-01-22T16:02:31Z",
+      "side": 1,
+      "message": "None of the kenzo have it here... Xiaomi shipped it on kenzo always in /system/etc/mbn_ota.txt...",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "6d88443858ef8a15e0de9b595cd9b4eabfc56eaf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_3b7222e6",
+        "filename": "system.prop",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 13452
+      },
+      "writtenOn": "2017-01-22T16:02:31Z",
+      "side": 1,
+      "message": "hydrogen don\u0027t need to do this.. It\u0027ll cause failures.",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "6d88443858ef8a15e0de9b595cd9b4eabfc56eaf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
