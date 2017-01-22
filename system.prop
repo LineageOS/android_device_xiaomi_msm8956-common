@@ -95,6 +95,7 @@ persist.radio.multisim.config=dsds
 persist.radio.NO_STAPA=1
 persist.radio.rat_on=combine
 persist.radio.sib16_support=1
+persist.radio.start_ota_daemon=1
 persist.radio.sw_mbn_update=0
 persist.radio.VT_HYBRID_ENABLE=1
 
