@@ -43,6 +43,12 @@ persist.dpm.nsrm.bkg.evt=3955
 # Dex2oat threads for faster app installation
 ro.sys.fw.dex2oat_thread_count=4
 
+# Data modules
+ro.use_data_netmgrd=true
+persist.data.netmgrd.qos.enable=true
+persist.data.mode=concurrent
+persist.data.iwlan.enable=true
+
 # FRP
 ro.frp.pst=/dev/block/bootdevice/by-name/config
 
@@ -68,11 +74,6 @@ media.msm8956hw=1
 mm.enable.smoothstreaming=true
 mmp.enable.3g2=true
 media.aac_51_output_enabled=true
-
-# Netmgrd
-persist.data.mode=concurrent
-persist.data.netmgrd.qos.enable=true
-ro.use_data_netmgrd=true
 
 # NITZ
 persist.rild.nitz_plmn=
