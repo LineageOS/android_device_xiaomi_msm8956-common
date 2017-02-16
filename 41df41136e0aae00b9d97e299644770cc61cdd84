@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_04f82a7b",
+        "filename": "sepolicy/rmt_storage.te",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2017-02-16T10:08:38Z",
+      "side": 1,
+      "message": "Is it really dac_override denial that you see? On gemini this was net_raw (for both rmt_storage and rfs_access).",
+      "range": {
+        "startLine": 1,
+        "startChar": 34,
+        "endLine": 1,
+        "endChar": 46
+      },
+      "revId": "41df41136e0aae00b9d97e299644770cc61cdd84",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
