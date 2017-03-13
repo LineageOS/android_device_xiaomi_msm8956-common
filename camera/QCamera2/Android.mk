@@ -83,6 +83,10 @@ ifeq (1,$(filter 1,$(shell echo "$$(( $(PLATFORM_SDK_VERSION) <= 22 ))" )))
 LOCAL_CFLAGS += -DUSE_L_MR1
 endif
 
+ifneq (,$(filter kenzo,$(TARGET_DEVICE)))
+    LOCAL_CFLAGS += -DLEGACY_CAPABILITY
+endif
+
 #LOCAL_STATIC_LIBRARIES := libqcamera2_util
 LOCAL_C_INCLUDES += \
         $(TARGET_OUT_HEADERS)/qcom/display
