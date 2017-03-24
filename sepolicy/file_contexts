@@ -6,3 +6,14 @@
 
 # IR Blaster
 /dev/lirc[0-9]*                                                       u:object_r:lirc_device:s0
+
+# Goodix gf66xx fingerprint
+/data/fpcd(/.*)?                                                      u:object_r:fpc_data_file:s0
+/data/system/users/*/settings_fingerprint.xml?                        u:object_r:fpc_data_file:s0
+/data/goodix(/.*)?                                                    u:object_r:gx_fpd_data_file:s0
+/dev/gf66xx-spi     				u:object_r:gx_fpd_device:s0
+/dev/ttyACM[0-9]*   				u:object_r:gx_fpd_device:s0
+/dev/goodix_fp*     				u:object_r:gx_fpd_device:s0
+/system/bin/gx_fpd       			u:object_r:gx_fpd_exec:s0
+/data/system/fingerprint(/.*)?                  u:object_r:gx_fpd_data_file:s0
+/persist/data/gxfp(/.*)?                        u:object_r:gx_fpd_data_file:s0
