@@ -5,3 +5,10 @@ allow fingerprintd fpc_sysfs:file rw_file_perms;
 allow fingerprintd storage_file:dir search;
 allow fingerprintd tee_device:chr_file rw_file_perms;
 allow fingerprintd uhid_device:chr_file rw_file_perms;
+allow fingerprintd storage_file:lnk_file { read open write };
+allow fingerprintd mnt_user_file:dir { search read open write };
+allow fingerprintd mnt_user_file:lnk_file { read open write };
+allow fingerprintd fuse:dir { search read open write };
+allow fingerprintd gx_fpd_service:service_manager { find };
+allow fingerprintd fingerprint_service:service_manager { find };
+set_prop(fingerprintd, system_prop)
