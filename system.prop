@@ -32,7 +32,7 @@ ro.btconfig.vendor=qcom
 ro.btconfig.chip=WCN3680
 
 # Camera
-media.camera.ts.monotonic=0
+media.camera.ts.monotonic=1
 persist.camera.HAL3.enabled=1
 
 # CNE/DPM
