@@ -109,6 +109,7 @@ persist.radio.rat_on=combine
 persist.radio.sib16_support=1
 persist.radio.sw_mbn_update=0
 persist.radio.VT_HYBRID_ENABLE=1
+persist.data.qmi.adb_logmask=0
 
 # Storage
 ro.sys.sdcardfs=true
