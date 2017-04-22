@@ -151,6 +151,9 @@ on boot
     chown system system /sys/class/leds/green/led_time
     chown system system /sys/class/leds/blue/led_time
 
+on post-fs
+    start qseecomd
+
 # msm specific files that need to be created on /data
 on post-fs-data
     # Create directory for TZ Apps
