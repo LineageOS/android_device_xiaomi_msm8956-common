@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a486d77_80e84cb5",
+        "filename": "rootdir/etc/init.qcom.power.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 16739
+      },
+      "writtenOn": "2017-05-19T21:19:55Z",
+      "side": 1,
+      "message": "First...",
+      "revId": "c3a09017d838ebafbad3a95d0a01cb5b458dea78",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a486d77_60eb10b1",
+        "filename": "rootdir/etc/init.qcom.power.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 16739
+      },
+      "writtenOn": "2017-05-19T21:19:55Z",
+      "side": 1,
+      "message": "Second... Users complain about camera lag, not every picture taken is saved, crashing on second run etc...",
+      "revId": "c3a09017d838ebafbad3a95d0a01cb5b458dea78",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
