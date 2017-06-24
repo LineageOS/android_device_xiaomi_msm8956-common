@@ -144,7 +144,7 @@ static int get_modem_version(char *ver_str, size_t len) {
     /* Do Boyer-Moore search across MODEM data */
     offset = bm_search(modem_data, modem_size, MODEM_VER_STR, MODEM_VER_STR_LEN);
     if (offset != NULL) {
-        snprintf(ver_str, len, "%s", offset);
+        snprintf(ver_str, len, "%s", offset + MODEM_VER_STR_LEN);
     } else {
         ret = -ENOENT;
     }
