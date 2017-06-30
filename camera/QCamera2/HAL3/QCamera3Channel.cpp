@@ -40,6 +40,7 @@
 #include <utils/Log.h>
 #include <utils/Errors.h>
 #include <cutils/properties.h>
+#include <sys/stat.h>
 #include "QCamera3Channel.h"
 #include "QCamera3HWI.h"
 #include "QCameraFormat.h"
