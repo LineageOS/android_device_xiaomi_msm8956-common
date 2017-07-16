@@ -636,5 +636,5 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
     <carrier_config mcc="260" mnc="03">
         <boolean name="config_enable_mms_with_mobile_data_off" value="true" />
     </carrier_config>
-    
+
 </carrier_config_list>
