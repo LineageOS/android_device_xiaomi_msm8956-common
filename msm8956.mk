@@ -234,10 +234,6 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     ueventd.qcom.rc
 
-# Recovery
-PRODUCT_PACKAGES += \
-    librecovery_updater_xiaomi
-
 # Sensors
 PRODUCT_PACKAGES += \
     sensors.msm8952
