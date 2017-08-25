@@ -94,7 +94,7 @@ etc/permissions/ConnectivityExt.xml
 framework/cneapiclient.jar
 framework/com.quicinc.cne.jar
 framework/ConnectivityExt.jar
--priv-app/CNEService/CNEService.apk
+#-priv-app/CNEService/CNEService.apk
 vendor/lib64/libcne.so|fc7836bc06083a36888242deedd391278dfb475f
 vendor/lib64/libcneapiclient.so|9b87511cf7586125f8428094db183374f73cfa43
 vendor/lib64/libcneqmiutils.so
