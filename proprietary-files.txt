@@ -70,7 +70,7 @@ etc/firmware/rampatch_tlv_3.2.tlv
 bin/hvdcp_opti
 
 # CNE
-bin/cnd
+bin/cnd|f2bebcda9b804e3ef71805b47485c4bde2ef22a3
 etc/cne/andsfCne.xml
 etc/cne/SwimConfig.xml
 etc/cne/wqeclient/ATT/ATT_profile1.xml
@@ -95,9 +95,10 @@ framework/cneapiclient.jar
 framework/com.quicinc.cne.jar
 framework/ConnectivityExt.jar
 -priv-app/CNEService/CNEService.apk
-vendor/lib64/libcne.so
-vendor/lib64/libcneapiclient.so
+vendor/lib64/libcne.so|fc7836bc06083a36888242deedd391278dfb475f
+vendor/lib64/libcneapiclient.so|9b87511cf7586125f8428094db183374f73cfa43
 vendor/lib64/libcneqmiutils.so
+vendor/lib64/libprotobuf-cpp-fuck.so|55b3d41f310398c4629e789065aab514baddc13d
 vendor/lib64/libvendorconn.so
 vendor/lib64/libwms.so
 vendor/lib64/libwqe.so
