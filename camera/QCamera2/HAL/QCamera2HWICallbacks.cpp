@@ -2392,7 +2392,7 @@ void QCamera2HardwareInterface::dumpJpegToFile(const void *data,
                 if (file_fd >= 0) {
                     ssize_t written_len = write(file_fd, data, size);
                     fchmod(file_fd, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-                    CDBG_HIGH("%s: written number of bytes %zd\n",
+                    CDBG_HIGH("%s: written number of bytes %ld\n",
                             __func__, written_len);
                     close(file_fd);
                 } else {
@@ -2641,7 +2641,7 @@ void QCamera2HardwareInterface::dumpFrameToFile(QCameraStream *stream,
                         }
 
                         CDBG_HIGH("%s: written number of bytes %ld\n",
-                            __func__, written_len);
+                            __func__, (long)written_len);
                         close(file_fd);
                     } else {
                         ALOGE("%s: fail t open file for image dumping", __func__);
@@ -2984,7 +2984,7 @@ void * QCameraCbNotifier::cbNotifyRoutine(void * data)
                                     }
                                     if (pme->mJpegCb) {
                                         ALOGI("%s: Calling JPEG Callback!! for camera %d"
-                                                "release_data %p",
+                                                "release_data %p"
                                                 "frame_idx %d",
                                                 __func__, pme->mParent->getCameraId(),
                                                 cb->user_data,
