@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eb6c510_7fdef093",
+        "filename": "overlay/packages/apps/CellBroadcastReceiver/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2017-08-30T10:56:35Z",
+      "side": 0,
+      "message": "We also moved this overlay to overlay_lineage.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 48
+      },
+      "revId": "b21bed0e4d2870fa8f52067c6b8083daab21352c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
