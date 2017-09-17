@@ -2984,7 +2984,7 @@ void * QCameraCbNotifier::cbNotifyRoutine(void * data)
                                     }
                                     if (pme->mJpegCb) {
                                         ALOGI("%s: Calling JPEG Callback!! for camera %d"
-                                                "release_data %p",
+                                                "release_data %p"
                                                 "frame_idx %d",
                                                 __func__, pme->mParent->getCameraId(),
                                                 cb->user_data,
