@@ -162,7 +162,7 @@ PRODUCT_PACKAGES += \
     org.codeaurora.camera
 
 # Fingerprint
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service \
     fingerprintd
 
