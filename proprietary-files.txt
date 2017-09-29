@@ -92,23 +92,24 @@ etc/permissions/cneapiclient.xml
 etc/permissions/com.quicinc.cne.xml
 etc/permissions/ConnectivityExt.xml
 framework/cneapiclient.jar
-framework/com.quicinc.cne.jar
+framework/com.quicinc.cne.jar|8551df50dec7bf2c07f342032d45c400b2568e5c
 framework/ConnectivityExt.jar
--priv-app/CNEService/CNEService.apk
+-priv-app/CNEService/CNEService.apk|0facc91810fa46454e26eafb89fba3cd3ef75a78
 vendor/lib64/libcne.so|fc7836bc06083a36888242deedd391278dfb475f
 vendor/lib64/libcneapiclient.so|9b87511cf7586125f8428094db183374f73cfa43
 vendor/lib64/libcneqmiutils.so
 vendor/lib64/libprotobuf-cpp-fuck.so|55b3d41f310398c4629e789065aab514baddc13d
 vendor/lib64/libvendorconn.so
-vendor/lib64/libwms.so
-vendor/lib64/libwqe.so
+vendor/lib64/libwms.so|616596607972209753fdbb71753029253789fba7
+vendor/lib64/libwqe.so|f8ca2d4146695b8da426aa98dd22393fa5eb5642
 vendor/lib64/libxml.so
-vendor/lib/libcne.so
-vendor/lib/libcneapiclient.so
+vendor/lib/libcne.so|784284e68410b90bd01fac3759ae8d04a9cd2385
+vendor/lib/libcneapiclient.so|925e274a9559fe308b65a1bf6c8d5dc1430cbfde
 vendor/lib/libcneqmiutils.so
+vendor/lib/libprotobuf-cpp-fuck.so|5b2819a3cf1866cdcc700ba24307b8ccb3e81ce3
 vendor/lib/libvendorconn.so
-vendor/lib/libwms.so
-vendor/lib/libwqe.so
+vendor/lib/libwms.so|743633701da9fcf03ef9f60a341444d8aaf2c62f
+vendor/lib/libwqe.so|06fe7998a68e0725329f3482bc6a1f2162d45d73
 vendor/lib/libxml.so
 
 # DPM
